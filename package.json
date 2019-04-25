@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mmmeff/webpack-content-hashed-module-ids-plugin.git"
+    "url": "https://github.com/mmmeff/content-hashed-module-ids-webpack-plugin.git"
   },
   "description": "A webpack plugin that generates guaranteed unique module ID hashes across multiple webpack builds",
   "main": "index.js",
