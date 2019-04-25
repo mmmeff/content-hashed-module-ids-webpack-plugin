@@ -7,6 +7,8 @@
   <h1>content-hashed-module-ids-webpack-plugin</h1>
 </div>
 
+[![npm][npm]][npm-url]
+
 This plugin generates module ID from unique hashes based on the file contents of the module. Unlike [Webpack's HashedModuleIdsPlugin](https://webpack.js.org/plugins/hashed-module-ids-plugin/), which generates hashes from the relative import path of the module.
 
 You can use this plugin to guarantee that multiple webpack bundles on a page do not clash their module IDs and overwrite modules when loading chunk assets. This is pivotal to achieving long-term caching across disparate builds. 
@@ -47,17 +49,19 @@ This configuration is heavily based on the article *[The 100% correct way to spl
 ```js
 const ContentHashedModuleIdsPlugin = require('content-hashed-module-ids-webpack-plugin');
 
+const isDev = process.env.NODE_ENV !== 'production';
+
 module.exports = {
-    context: root,
-    entry: path.resolve(root, './index.js'),
+    context: __dirname,
+    entry: path.resolve(__dirname, './index.js'),
     output: {
         filename: '[name].[chunkhash].js',
-        path: path.join(root, './dist'),
+        path: path.join(__dirname, './dist'),
         publicPath: './static/',
         library: 'SharedChunkBundles' // Groups all similarly built packages into the same library
     },
     plugins: [
-        new ContentHashedModuleIdsPlugin() // Guarantees that all moduleIds under the "URRF_Widget" library are unique
+        new ContentHashedModuleIdsPlugin() // Guarantees that all moduleIds under the SharedChunkBundles library are unique
     ],
     optimization: {
         runtimeChunk: 'single',
@@ -81,3 +85,10 @@ module.exports = {
     devtool: isDev ? 'eval' : undefined,
 }
 ```
+
+## License
+
+[MIT](./LICENSE)
+
+[npm]: https://img.shields.io/npm/v/content-hashed-module-ids-webpack-plugin.svg
+[npm-url]: https://npmjs.com/package/content-hashed-module-ids-webpack-plugin
