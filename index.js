@@ -30,8 +30,13 @@ class ContentHashedModuleIdsPlugin {
 						if (module.id === null && module.resource) {
 							const hash = createHash(options.hashFunction);
 
+                                                        let resourcePath = module.resource;
+                                                        if (resourcePath.indexOf('?') > -1) {
+                                                            resourcePath = resourcePath.split('?')[0];
+                                                        }
+
 							try {
-								hash.update(fs.readFileSync(module.resource));
+								hash.update(fs.readFileSync(resourcePath));
 							} catch (ex) {
 								console.error('failed on', module.context, module.resource);
 								throw ex;
